@@ -1,0 +1,52 @@
+parameters:
+
+    # jwt
+    d_tag_api.service.jwt_response_transformer.class: DTag\Bundles\ApiBundle\Service\JWTResponseTransformer
+    d_tag.event.authentication_success_listener.class: DTag\Bundles\ApiBundle\EventListener\AuthenticationSuccessListener
+    d_tag.event.jwt_created_listener.class: DTag\Bundles\ApiBundle\EventListener\JWTCreatedListener
+
+services:
+
+    # handlers
+
+    d_tag.handler.role_handler_abstract:
+        class: DTag\Handler\RoleHandlerAbstract
+        abstract: true
+        public: false
+        parent : d_tag.handler.handler_abstract
+        arguments:
+            - @form.factory
+
+    # authentication
+    d_tag_api.service.jwt_response_transformer:
+        class: %d_tag_api.service.jwt_response_transformer.class%
+
+    d_tag.event.authentication_success_listener:
+        class: %d_tag.event.authentication_success_listener.class%
+        arguments: [@d_tag_api.service.jwt_response_transformer, @fos_user.user_manager]
+        tags:
+            -
+               name: kernel.event_listener
+               event: 'lexik_jwt_authentication.on_authentication_success'
+               method: 'onAuthenticationSuccess'
+               priority: 10
+
+    d_tag.event.jwt_created_listener:
+        class: %d_tag.event.jwt_created_listener.class%
+        tags:
+            -
+                name: kernel.event_listener
+                event: 'lexik_jwt_authentication.on_jwt_created'
+                method: 'onJWTCreated'
+
+    d_tag_api.mailer.mailer:
+        class: DTag\Bundle\ApiBundle\Mailer\Mailer
+        arguments:
+            - '@mailer'
+            - '@router'
+            - '@templating'
+            -
+                resetting.template: DTagApiBundle:Resetting:email.txt.twig
+                from_email:
+                    resetting: %d_tag_user_system_broker.resetting.email.from_email%
+                password_resetting_link: %password_resetting_link%

@@ -1,0 +1,4 @@
+admin_api_user:
+    type: rest
+    resource: DTag\Bundles\AdminApiBundle\Controller\UserController
+    name_prefix: admin_api_1_

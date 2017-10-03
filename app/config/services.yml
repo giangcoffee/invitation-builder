@@ -1,0 +1,17 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    # event dispatched on user action such as add, remove, delete
+    d_tag.events.handler_event: 'd_tag.events.handler_event'
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  d_tag.handler.handler_abstract:
+      class: DTag\Handler\HandlerAbstract
+      abstract: true
+      public: false
+      calls:
+          - [setEventDispatcher, ["@event_dispatcher"]]
+          - [setEvent, [%d_tag.events.handler_event%]]

@@ -1,0 +1,20 @@
+services:
+    # main public services
+
+    d_tag_admin_api.handler.user:
+        class: DTag\Bundles\AdminApiBundle\Handler\UserHandler
+        parent: d_tag.handler.handler_abstract
+        public: true
+        arguments:
+            - @form.factory
+            - @d_tag_admin_api.form.type.user
+            - @d_tag_user.domain_manager.broker
+
+    # forms
+
+    d_tag_admin_api.form.type.user:
+        class: DTag\Bundles\AdminApiBundle\Form\Type\UserFormType
+        arguments:
+            - @=service('security.context').getToken().getUser()
+        tags:
+            - { name: form.type, alias: d_tag_form_admin_api_user }

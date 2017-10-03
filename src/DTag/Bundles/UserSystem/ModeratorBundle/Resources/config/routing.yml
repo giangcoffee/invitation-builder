@@ -1,0 +1,4 @@
+account_api_user:
+    type: rest
+    resource: DTag\Bundles\UserSystem\ModeratorBundle\Controller\ModeratorController
+    name_prefix: moderator_api_1_

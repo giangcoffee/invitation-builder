@@ -1,0 +1,28 @@
+DTag\Bundles\UserBundle\Entity\User:
+    exclusion_policy: ALL
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - username
+        - email
+        - roles
+        - enabledModules
+        - userRoles # camel case without get i.e getUserRoles becomes userRoles
+        - last_login
+        - enabled
+    virtual_properties:
+#        getUserRoles: ~
+        getEnabledModules: ~
+    properties:
+        id:
+            expose: true
+            groups: [user.summary]
+        username:
+            expose: true
+            groups: [user.summary]
+        email:
+            expose: true
+        lastLogin:
+            expose: true
+        enabled:
+            expose: true

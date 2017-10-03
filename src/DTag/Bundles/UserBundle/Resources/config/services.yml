@@ -1,0 +1,45 @@
+parameters:
+    d_tag.bundle.user.entity.user.class: DTag\Bundles\UserBundle\Entity\User
+    # define user systems
+    d_tag.user_system.broker: d_tag_user_system_broker
+    d_tag.user_system.admin: d_tag_user_system_admin
+    # event dispatched on login success
+    d_tag_user.events.login_success: d_tag_user.events.login_success
+    # used in \DTag\Bundle\UserBundle\DependencyInjection\Compiler\OverrideServiceCompilerPass
+    d_tag_user.request.user_system.authentication_listener.class: DTag\Bundles\UserBundle\Request\UserSystem\AuthenticationListener
+
+services:
+    # returns our role model class for the current authenticated user entity
+    d_tag.token:
+        class: Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+        factory_service: security.context
+        factory_method: getToken
+
+    d_tag.user_role:
+        class: DTag\Model\User\Role\UserRoleInterface
+        factory_service: d_tag.token
+        factory_method: getUser
+
+    d_tag_user.domain_manager.broker:
+        class: DTag\Bundles\UserBundle\DomainManager\BrokerManager
+        arguments:
+            - @d_tag_user_system_broker.user_manager
+
+    d_tag_user.handler.authentication_success:
+        class: DTag\Bundles\UserBundle\Handler\AuthenticationSuccessHandler
+        arguments:
+            - @lexik_jwt_authentication.handler.authentication_success
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
+            - [setSuccessEventName, ["%d_tag_user.events.login_success%"]]
+
+    d_tag_user.request.user_system.request_matcher:
+        class: DTag\Bundles\UserBundle\Request\UserSystem\RequestMatcher
+
+    d_tag_app.event_listener.user_type_security_listener:
+        class: DTag\Bundles\UserBundle\EventListener\UserTypeSecurityListener
+        arguments:
+            - @security.context
+            - @annotation_reader
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

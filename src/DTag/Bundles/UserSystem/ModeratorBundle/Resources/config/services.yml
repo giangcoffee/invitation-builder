@@ -1,0 +1,5 @@
+services:
+    d_tag_user_system_moderator.set_moderator_role_listener:
+        class: DTag\Bundles\UserSystem\ModeratorBundle\EventListener\SetModeratorRoleListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

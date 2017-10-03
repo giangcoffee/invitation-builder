@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block subject %}[Tagcade] Resetting your password
+    {% autoescape false %}
+    {#{{ 'resetting.email.subject'|trans }}#}
+    {% endautoescape %}
+{% endblock %}
+{% block body_text %}
+    {% autoescape false %}
+    {#{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}#}
+    {% endautoescape %}
+    Dear {{ user.company }},
+
+    Please click following link to reset your password:
+    {{ confirmationUrl }}
+
+    Regards,
+    Tagcade.
+{% endblock %}
+{% block body_html %}
+{% endblock %}

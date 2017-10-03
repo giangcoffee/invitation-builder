@@ -1,0 +1,19 @@
+api_get_token:
+    path:      /getToken
+    defaults:  { _controller: DTagApiBundle:Token:getToken }
+    methods:  [POST]
+
+api_check_token:
+    path:      /checkToken
+    defaults:  { _controller: DTagApiBundle:Token:checkToken }
+    methods:  [POST]
+
+api_reset_password_send_email:
+    path: /resetting/sendEmail
+    defaults: { _controller: DTagApiBundle:ResetPassword:sendEmail }
+    methods: [POST]
+
+api_reset_password_reset:
+    path: /resetting/reset/{token}
+    defaults: { _controller: DTagApiBundle:ResetPassword:reset }
+    methods: [POST]

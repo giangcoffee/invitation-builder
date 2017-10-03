@@ -1,0 +1,13 @@
+
+d_tag_user_system_moderator_security_login:
+    path: /login
+    defaults: { _controller: "FOSUserBundle:Security:login" }
+
+d_tag_user_system_moderator_security_check:
+    path: /login_check
+    defaults: { _controller: "FOSUserBundle:Security:check" }
+    methods: "POST"
+
+d_tag_user_system_moderator_security_logout:
+    path: /logout
+    defaults: { _controller: "FOSUserBundle:Security:logout" }

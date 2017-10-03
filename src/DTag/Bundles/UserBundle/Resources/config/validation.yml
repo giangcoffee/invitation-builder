@@ -1,0 +1,38 @@
+DTag\Bundles\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: usernameCanonical
+            errorPath: username
+            message: fos_user.username.already_used
+            groups: [Admin]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: emailCanonical
+            errorPath: email
+            message: fos_user.email.already_used
+            groups: [Admin]
+    properties:
+        username:
+            - NotBlank:
+                message: fos_user.username.blank
+            - Length:
+                min: 2
+                minMessage: fos_user.username.short
+                max: 255
+                maxMessage: fos_user.username.long
+        email:
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 255
+                maxMessage: fos_user.email.long
+            - Email:
+                message: fos_user.email.invalid
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [Admin]
+            - Length:
+                min: 2
+                minMessage: fos_user.password.short
+                max: 4096
+                groups: [Admin]

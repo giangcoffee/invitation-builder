@@ -1,0 +1,15 @@
+d_tag_admin_api:
+    resource: "@DTagAdminApiBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/admin/v1
+
+dtag_broker_api:
+    resource: "@DTagUserSystemBrokerBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/broker/v1
+
+d_tag_api:
+    resource: "@DTagApiBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/v1
+

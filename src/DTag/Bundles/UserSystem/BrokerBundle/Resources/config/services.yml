@@ -1,0 +1,5 @@
+services:
+    d_tag_user_system_broker.set_broker_role_listener:
+        class: DTag\Bundles\UserSystem\BrokerBundle\EventListener\SetBrokerRoleListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

@@ -1,0 +1,9 @@
+
+d_tag_user_system_moderator_profile_show:
+    path: /
+    defaults: { _controller: "FOSUserBundle:Profile:show" }
+    methods: "GET"
+
+d_tag_user_system_moderator_profile_edit:
+    path: /edit
+    defaults: { _controller: "FOSUserBundle:Profile:edit" }

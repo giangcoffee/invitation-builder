@@ -1,0 +1,67 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+
+    encoders:
+        DTag\Bundles\UserBundle\Entity\User: sha512
+#            algorithm: bcrypt
+#            cost:      15
+
+    role_hierarchy:
+        ROLE_BROKER: ROLE_USER
+        ROLE_ADMIN:     ROLE_USER
+
+    providers:
+        d_tag_user_moderator:
+            id: d_tag_user_system_moderator.user_provider.username
+        d_tag_user_broker:
+            id: d_tag_user_system_broker.user_provider.username
+        d_tag_user_admin:
+            id: d_tag_user_system_admin.user_provider.username
+        d_tag_user:
+            chain:
+                providers: [d_tag_user_broker, d_tag_user_admin]
+        #
+        fos_userbundle:
+#            id: fos_user.user_manager
+#            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        dev:
+            pattern:    ^/(_(profiler|wdt)|css|images|js)/
+            security:   false
+
+        apidoc:
+            pattern:    ^/docs/?$
+            security:   false
+
+        gettoken:
+            pattern:    ^/api/v1/getToken$
+            stateless:  true
+            gfreeau_get_jwt:
+                username_parameter: username
+                password_parameter: password
+                post_only:          true
+                success_handler:    d_tag_user.handler.authentication_success
+                failure_handler:    lexik_jwt_authentication.handler.authentication_failure
+            provider: d_tag_user
+
+        resetting:
+            pattern: ^/api/v1/resetting/
+            stateless: true
+            security: false
+            anonymous: ~
+            provider:  d_tag_user_broker
+
+        api:
+            pattern:    ^/api/
+            stateless:  true
+            lexik_jwt:
+                throw_exceptions:   true
+                create_entry_point: false
+            provider:  d_tag_user
+
+    access_control:
+        - { path: ^/api/admin/, roles: ROLE_ADMIN }
+        - { path: ^/api/, roles: ROLE_USER }

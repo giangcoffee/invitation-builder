@@ -1,0 +1,19 @@
+
+d_tag_user_system_broker_registration_register:
+    path: /
+    defaults: { _controller: "FOSUserBundle:Registration:register" }
+
+d_tag_user_system_broker_registration_check_email:
+    path: /check-email
+    defaults: { _controller: "FOSUserBundle:Registration:checkEmail" }
+    methods: "GET"
+
+d_tag_user_system_broker_registration_confirm:
+    path: /confirm/{token}
+    defaults: { _controller: "FOSUserBundle:Registration:confirm" }
+    methods: "GET"
+
+d_tag_user_system_broker_registration_confirmed:
+    path: /confirmed
+    defaults: { _controller: "FOSUserBundle:Registration:confirmed" }
+    methods: "GET"

@@ -1,0 +1,42 @@
+DTag\Bundles\UserSystem\BrokerBundle\Entity\User:
+    type:  entity
+    table: core_user_broker
+
+    fields:
+        firstName:
+            type: string
+            nullable: true
+        lastName:
+            type: string
+            nullable: true
+        company:
+            type: string
+            nullable: true
+        phone:
+            type: string
+            nullable: true
+        billingRate:
+            type: decimal
+            scale: 4
+            nullable: true
+        city:
+            type: string
+            nullable: true
+        state:
+            type: string
+            nullable: true
+        address:
+            type: string
+            nullable: true
+        postalCode:
+            type: string
+            nullable: true
+        country:
+            type: string
+            nullable: true
+        settings:
+            type: json_array
+            nullable: true
+        moduleConfigs:
+            type: json_array
+            nullable: true

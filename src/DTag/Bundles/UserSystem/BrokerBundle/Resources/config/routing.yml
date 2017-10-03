@@ -1,0 +1,4 @@
+account_api_user:
+    type: rest
+    resource: DTag\Bundles\UserSystem\BrokerBundle\Controller\BrokerController
+    name_prefix: broker_api_1_

@@ -1,0 +1,23 @@
+
+d_tag_user_system_broker_group_list:
+    path: /list
+    defaults: { _controller: "FOSUserBundle:Group:list" }
+    methods: "GET"
+
+d_tag_user_system_broker_group_new:
+    path: /new
+    defaults: { _controller: "FOSUserBundle:Group:new" }
+
+d_tag_user_system_broker_group_show:
+    path: /{groupName}
+    defaults: { _controller: "FOSUserBundle:Group:show" }
+    methods: "GET"
+
+d_tag_user_system_broker_group_edit:
+    path: /{groupName}/edit
+    defaults: { _controller: "FOSUserBundle:Group:edit" }
+
+d_tag_user_system_broker_group_delete:
+    path: /{groupName}/delete
+    defaults: { _controller: "FOSUserBundle:Group:delete" }
+    methods: "GET"
